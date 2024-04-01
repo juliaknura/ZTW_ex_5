@@ -15,4 +15,10 @@ public class Book {
     private String subtitle;
     private List<Author> authors;
     private int yearOfPublication;
+
+    public boolean assertBooksMatched(Book book) {
+        return title.equals(book.getTitle()) &&
+                (yearOfPublication == book.getYearOfPublication() ||
+                        authors.equals(book.getAuthors()));
+    }
 }
