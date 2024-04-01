@@ -2,16 +2,18 @@ package com.example.Lab5.controller;
 
 import com.example.Lab5.model.Book;
 import com.example.Lab5.service.IBooksService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@AllArgsConstructor
 public class BookController {
 
     @Autowired
-    IBooksService booksService;
+    private final IBooksService booksService;
 
     @RequestMapping(value = "/get/books", method = RequestMethod.GET)
     public ResponseEntity<Object> getBooks() {
