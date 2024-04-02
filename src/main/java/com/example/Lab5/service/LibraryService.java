@@ -82,9 +82,8 @@ public final class LibraryService implements ILibraryService {
     }
 
     @Override
-    public BorrowBookResult borrowBook(LendingRegisterRecord lendingRegisterRecord) {
-        var readerOptional = getReader(lendingRegisterRecord.getReader());
-        var bookOptional = getBook(lendingRegisterRecord.getBook());
+    public BorrowBookResult borrowBook(LendingRecordDTO lendingRecordDTO) {
+        var readerOptional = getReader(lendingRecordDTO.reader());
 
         if (readerOptional.isEmpty())
             return BorrowBookResult.READER_NOT_FOUND;
@@ -93,6 +92,7 @@ public final class LibraryService implements ILibraryService {
         if (assertReaderHasBorrowRight(reader))
             return BorrowBookResult.READER_HAS_NO_BORROW_RIGHT;
 
+        var bookOptional = getBook(lendingRecordDTO.book());
         if (bookOptional.isEmpty())
             return BorrowBookResult.BOOK_NOT_FOUND;
 

@@ -1,6 +1,6 @@
 package com.example.Lab5.controller;
 
-import com.example.Lab5.model.LendingRegisterRecord;
+import com.example.Lab5.model.LendingRecordDTO;
 import com.example.Lab5.service.ILibraryService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +36,8 @@ public class LibraryController {
     }
 
     @PutMapping(value = "/put/borrowBook")
-    public ResponseEntity<Object> borrowBook(@RequestBody LendingRegisterRecord lendingRegisterRecord) {
-        return switch (libraryService.borrowBook(lendingRegisterRecord)) {
+    public ResponseEntity<Object> borrowBook(@RequestBody LendingRecordDTO lendingRecordDTO) {
+        return switch (libraryService.borrowBook(lendingRecordDTO)) {
             case SUCCESS -> new ResponseEntity<>("The book has been successfully borrowed", HttpStatus.OK);
             case BOOK_UNAVAILABLE -> new ResponseEntity<>("The book has no available copies for borrowing.", HttpStatus.CONFLICT);
             case BOOK_NOT_FOUND -> new ResponseEntity<>("The book is not available in the library.", HttpStatus.NOT_FOUND);

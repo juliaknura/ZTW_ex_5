@@ -13,5 +13,5 @@ public interface ILibraryService {
     List<LendingRegisterRecord> getLendingRegister();
     List<BooksCopiesRecords> getBooksCopiesRecords();
     List<Reader> getReaders();
-    BorrowBookResult borrowBook(LendingRegisterRecord lendingRegisterRecord);
+    BorrowBookResult borrowBook(LendingRecordDTO lendingRecordDTO);
 }

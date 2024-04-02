@@ -35,7 +35,9 @@ public final class AuthorService implements IAuthorService {
         return repository.getAuthors()
                 .stream()
                 .filter(foundAuthor -> foundAuthor.getId() == id)
-                .peek(foundAuthor -> foundAuthor.setAttributes(author))
+                .peek(foundAuthor -> {
+                    foundAuthor.setFirstName(author.getFirstName());
+                    foundAuthor.setLastName(author.getLastName());})
                 .findFirst()
                 .isPresent();
     }
