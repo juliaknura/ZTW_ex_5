@@ -10,7 +10,7 @@ import lombok.Setter;
 public class BooksCopiesRecords {
 
     private int id;
-    private final Book book;
+    private final int bookID;
     private int copiesNumber;
     private int currentAvailable;
 }
