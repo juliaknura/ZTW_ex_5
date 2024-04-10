@@ -10,4 +10,5 @@ public interface IMemoryRepository {
     List<LendingRegisterRecord> getLendingRegister();
     List<BooksCopiesRecords> getBooksCopies();
     List<Reader> getReaders();
+    List<BookAndAvailabilityInLibraries> getFullBooksInfo();
 }

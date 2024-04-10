@@ -34,6 +34,11 @@ public class LibraryController {
         return new ResponseEntity<>(libraryService.getReaders(), HttpStatus.OK);
     }
 
+    @GetMapping(value = "/get/fullBookInfo")
+    public ResponseEntity<Object> getFullBookInfo(){
+        return new ResponseEntity<>(libraryService.getFullBooksInfo(), HttpStatus.OK);
+    }
+
     @PutMapping(value = "/borrow/book/{bookID}/reader/{readerID}")
     public ResponseEntity<Object> borrowBook(@PathVariable("bookID") int bookID, @PathVariable("readerID") int readerID) {
         return switch (libraryService.borrowBook(bookID, readerID)) {

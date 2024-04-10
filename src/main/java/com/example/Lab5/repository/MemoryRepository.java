@@ -6,8 +6,7 @@ import lombok.Getter;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Repository
 @Getter
@@ -48,37 +47,37 @@ public class MemoryRepository implements IMemoryRepository{
 
         lendingRegister.add(new LendingRegisterRecord(1,
                 booksRepo.get(0).getId(),
-                readers.get(0).Id(),
+                readers.get(0).id(),
                 LocalDate.of(2024, 1, 12),
                 LocalDate.of(2024, 2, 12),
                 LocalDate.of(2024, 2, 9)));
         lendingRegister.add(new LendingRegisterRecord(2,
                 booksRepo.get(1).getId(),
-                readers.get(1).Id(),
+                readers.get(1).id(),
                 LocalDate.of(2024, 1, 20),
                 LocalDate.of(2024, 2, 20),
                 LocalDate.of(2024, 2, 19)));
         lendingRegister.add(new LendingRegisterRecord(3,
                 booksRepo.get(3).getId(),
-                readers.get(1).Id(),
+                readers.get(1).id(),
                 LocalDate.of(2024, 4, 1),
                 LocalDate.of(2024, 5, 1),
                 null));
         lendingRegister.add(new LendingRegisterRecord(4,
                 booksRepo.get(3).getId(),
-                readers.get(2).Id(),
+                readers.get(2).id(),
                 LocalDate.of(2024, 4, 2),
                 LocalDate.of(2024, 5, 2),
                 null));
         lendingRegister.add(new LendingRegisterRecord(5,
                 booksRepo.get(5).getId(),
-                readers.get(2).Id(),
+                readers.get(2).id(),
                 LocalDate.of(2024, 3, 1),
                 LocalDate.of(2024, 4, 1),
                 null));
         lendingRegister.add(new LendingRegisterRecord(6,
                 booksRepo.get(5).getId(),
-                readers.get(1).Id(),
+                readers.get(1).id(),
                 LocalDate.of(2024, 4, 5),
                 LocalDate.of(2024, 5, 5),
                 null));
@@ -107,5 +106,18 @@ public class MemoryRepository implements IMemoryRepository{
     @Override
     public List<Reader> getReaders() {
         return readers;
+    }
+
+    @Override
+    public List<BookAndAvailabilityInLibraries> getFullBooksInfo() {
+        var bookAndAvailability = new HashMap<Integer, BookAndAvailabilityInLibraries>();
+        for (var book : booksRepo) {
+            bookAndAvailability.put(book.getId(), BookAndAvailabilityInLibraries.fromBook(book));
+        }
+        for (var bookCopies: booksCopies) {
+            bookAndAvailability.get(bookCopies.getBookID()).setAvailabilityInLibraries(bookCopies);
+        }
+
+        return bookAndAvailability.values().stream().toList();
     }
 }

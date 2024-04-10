@@ -31,6 +31,11 @@ public final class LibraryService implements ILibraryService {
         return memoryRepository.getReaders();
     }
 
+    @Override
+    public List<BookAndAvailabilityInLibraries> getFullBooksInfo() {
+        return memoryRepository.getFullBooksInfo();
+    }
+
     private boolean assertReaderHasBorrowRight(int readerID) {
         return memoryRepository.getLendingRegister()
                 .stream()
@@ -48,7 +53,7 @@ public final class LibraryService implements ILibraryService {
     private Optional<Reader> getReader(int readerID) {
         return memoryRepository.getReaders()
                 .stream()
-                .filter(foundReader -> foundReader.Id() == readerID).findFirst();
+                .filter(foundReader -> foundReader.id() == readerID).findFirst();
     }
 
     private Optional<Book> getBook(int bookID) {
@@ -98,7 +103,7 @@ public final class LibraryService implements ILibraryService {
             return BorrowBookResult.READER_NOT_FOUND;
 
         var reader = readerOptional.get();
-        if (assertReaderHasBorrowRight(reader.Id()))
+        if (assertReaderHasBorrowRight(reader.id()))
             return BorrowBookResult.READER_HAS_NO_BORROW_RIGHT;
 
         var bookOptional = getBook(bookID);
@@ -113,7 +118,7 @@ public final class LibraryService implements ILibraryService {
         addNewLendingRecord(new LendingRegisterRecord(
                 getLendingRegisterId(),
                 book.getId(),
-                reader.Id(),
+                reader.id(),
                 LocalDate.now(),
                 LocalDate.now().plusMonths(1),
                 null));
@@ -132,11 +137,11 @@ public final class LibraryService implements ILibraryService {
             return ReturnBookResult.BOOK_NOT_FOUND;
 
         var book = bookOptional.get();
-        if(assertBookBorrowed(book.getId(), readerOptional.get().Id()))
+        if(assertBookBorrowed(book.getId(), readerOptional.get().id()))
             return ReturnBookResult.BOOK_NOT_BORROWED;
 
         updateBooksCurrentlyAvailable(book.getId(), 1);
-        updateLendingRecord(book.getId(), readerOptional.get().Id());
+        updateLendingRecord(book.getId(), readerOptional.get().id());
 
         return ReturnBookResult.SUCCESS;
     }

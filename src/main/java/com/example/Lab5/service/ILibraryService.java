@@ -17,6 +17,7 @@ public interface ILibraryService {
     List<LendingRegisterRecord> getLendingRegister();
     List<BooksCopiesRecords> getBooksCopiesRecords();
     List<Reader> getReaders();
+    List<BookAndAvailabilityInLibraries> getFullBooksInfo();
     BorrowBookResult borrowBook(int bookID, int readerID);
 
     ReturnBookResult returnBook(int bookID, int readerID);
