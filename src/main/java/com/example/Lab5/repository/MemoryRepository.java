@@ -115,7 +115,8 @@ public class MemoryRepository implements IMemoryRepository{
             bookAndAvailability.put(book.getId(), BookAndAvailabilityInLibraries.fromBook(book));
         }
         for (var bookCopies: booksCopies) {
-            bookAndAvailability.get(bookCopies.getBookID()).setAvailabilityInLibraries(bookCopies);
+            if (bookAndAvailability.containsKey(bookCopies.getBookID()))
+                bookAndAvailability.get(bookCopies.getBookID()).setAvailabilityInLibraries(bookCopies);
         }
 
         return bookAndAvailability.values().stream().toList();
